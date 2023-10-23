@@ -1,0 +1,5 @@
+name: EGHS_chest
+version: '${project.version}'
+main: eghs_chest.eghs_chest.EGHS_chest
+commands:
+  아이템저장:

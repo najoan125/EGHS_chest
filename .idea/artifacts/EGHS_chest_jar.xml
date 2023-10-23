@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EGHS_chest:jar">
+    <output-path>$PROJECT_DIR$/../../마인크래프트 1.12.2 플러그인 테스트 서버/plugins</output-path>
+    <root id="archive" name="EGHS_chest.jar">
+      <element id="module-output" name="EGHS_chest" />
+    </root>
+  </artifact>
+</component>
