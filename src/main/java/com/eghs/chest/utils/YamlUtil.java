@@ -1,5 +1,6 @@
-package eghs_chest.eghs_chest;
+package com.eghs.chest.utils;
 
+import com.eghs.chest.EGHS_chest;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -7,21 +8,20 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
 public class YamlUtil {
-    public void saveToYaml(Player p, Inventory inventory, String... chests) throws IOException {
+    public static void save(Player p, Inventory inventory, String... chests) throws IOException {
         UUID playeruuid = p.getPlayer().getUniqueId();
         for (String s : chests) {
             File file = new File(EGHS_chest.dataFolder, s + "/" + playeruuid + ".yml");
 
             YamlConfiguration yaml = new Utf8YamlConfiguration();
             int inventorySize = inventory.getSize();
-            yaml.set("size", Integer.valueOf(inventorySize));
+            yaml.set("size", inventorySize);
             ConfigurationSection items = yaml.createSection("items");
             for (int slot = 0; slot < inventorySize; slot++) {
                 ItemStack stack = inventory.getItem(slot);
@@ -32,7 +32,7 @@ public class YamlUtil {
         }
     }
 
-    public Inventory loadFromYaml(Player p, String chest, int row, String title) throws IOException, InvalidConfigurationException {
+    public static Inventory loadInventory(Player p, String chest, int row, String title) throws IOException, InvalidConfigurationException {
         UUID playeruuid = p.getPlayer().getUniqueId();
         File file = new File(EGHS_chest.dataFolder, chest + "/" + playeruuid + ".yml");
 
@@ -49,5 +49,24 @@ public class YamlUtil {
             }
         }
         return inventory;
+    }
+
+    public static int getInventoryRows(Player p, String chest) throws IOException, InvalidConfigurationException {
+        UUID playeruuid = p.getPlayer().getUniqueId();
+        File file = new File(EGHS_chest.dataFolder, chest + "/" + playeruuid + ".yml");
+
+        YamlConfiguration yaml = new Utf8YamlConfiguration();
+        yaml.load(file);
+        return yaml.getInt("size", 9) / 9;
+    }
+
+    public static void setInventorySize(Player p, String chest, int row) throws IOException, InvalidConfigurationException {
+        UUID playeruuid = p.getPlayer().getUniqueId();
+        File file = new File(EGHS_chest.dataFolder, chest + "/" + playeruuid + ".yml");
+
+        YamlConfiguration yaml = new Utf8YamlConfiguration();
+        yaml.load(file);
+        yaml.set("size", row * 9);
+        yaml.save(file);
     }
 }
