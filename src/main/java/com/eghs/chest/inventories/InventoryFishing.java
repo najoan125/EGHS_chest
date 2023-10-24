@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -31,7 +32,9 @@ public class InventoryFishing implements InventoryInterface {
     @Override
     public void inventoryClickEvent(InventoryClickEvent e) {
         Material currentMaterial = e.getCurrentItem().getType();
-        if (currentMaterial.equals(Material.RAW_FISH)) {
+        if (e.getAction() == InventoryAction.HOTBAR_SWAP || e.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD) {
+            e.setCancelled(true);
+        } else if (currentMaterial.equals(Material.RAW_FISH)) {
             ItemMeta itemMeta = e.getCurrentItem().getItemMeta();
             e.setCancelled(!itemMeta.hasDisplayName() || !itemMeta.getDisplayName().replaceAll("§\\S", "").substring(0, 2).matches("^\\[\\S+$"));
         } else {

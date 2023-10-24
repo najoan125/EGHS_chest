@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
@@ -39,7 +40,9 @@ public class InventoryRuneEquip implements InventoryInterface {
 
     @Override
     public void inventoryClickEvent(InventoryClickEvent e) {
-        if (e.getCurrentItem().getType().equals(Material.INK_SACK) && e.getCurrentItem().getDurability() == (short) 4) {
+        if (e.getAction() == InventoryAction.HOTBAR_SWAP || e.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD) {
+            e.setCancelled(true);
+        } else if (e.getCurrentItem().getType().equals(Material.INK_SACK) && e.getCurrentItem().getDurability() == (short) 4) {
             ItemMeta itemMeta = e.getCurrentItem().getItemMeta();
             e.setCancelled(!itemMeta.hasDisplayName() || !itemMeta.getDisplayName().replaceAll("§\\S", "").matches("^\\S+의 룬 \\+[0-9]+$"));
         } else {

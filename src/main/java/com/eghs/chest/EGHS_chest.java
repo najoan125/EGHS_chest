@@ -16,6 +16,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -118,7 +119,7 @@ public final class EGHS_chest extends JavaPlugin implements Listener, CommandExe
 
     @EventHandler
     public void inventoryClickEvent(InventoryClickEvent e) {
-        if (e.getCurrentItem() == null || e.getCurrentItem().getTypeId() == 0) {
+        if ((e.getCurrentItem() == null || e.getCurrentItem().getTypeId() == 0) && e.getAction() != InventoryAction.HOTBAR_SWAP && e.getAction() != InventoryAction.HOTBAR_MOVE_AND_READD) {
             e.setCancelled(false);
         } else {
             if (e.getView().getTitle().equals("§f라나의 창고 상점")) {
