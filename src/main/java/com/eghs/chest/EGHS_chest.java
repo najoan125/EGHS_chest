@@ -1,11 +1,11 @@
 package com.eghs.chest;
 
+import com.eghs.chest.inventories.InventoryChest;
 import com.eghs.chest.inventories.InventoryChestShop;
 import com.eghs.chest.inventories.InventoryFishing;
 import com.eghs.chest.inventories.rune.InventoryRuneBackpack;
 import com.eghs.chest.inventories.rune.InventoryRuneEquip;
 import com.eghs.chest.utils.YamlUtil;
-import com.eghs.chest.inventories.InventoryChest;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -48,10 +48,10 @@ public final class EGHS_chest extends JavaPlugin implements Listener, CommandExe
             for (String s : chests) {
                 file = new File(getDataFolder(), "/" + s);
                 Files.createDirectories(Paths.get(file.getPath()));
-                System.out.println("성공적으로 폴더 " + s + " 가 생성되었습니다.");
+                System.out.println(PREFIX+"성공적으로 폴더 " + s + " 이(가) 생성되었습니다.");
             }
         } catch (IOException e) {
-            System.out.println("폴더 생성에 실패하였습니다 : " + e.getMessage());
+            System.out.println(PREFIX+"§c폴더 생성에 실패하였습니다 : " + e.getMessage());
         }
     }
 
